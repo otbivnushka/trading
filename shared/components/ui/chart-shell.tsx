@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 type ChartShellProps = {
   title: string;
   subtitle?: string;
-  height: number;
+  height: string;
   children: ReactNode;
 };
 
@@ -12,9 +12,7 @@ export function ChartShell({ title, subtitle, height, children }: ChartShellProp
     <section className="overflow-hidden rounded-sm border border-border bg-card text-card-foreground">
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-[0.18em]">
-            {title}
-          </h2>
+          <h2 className="text-sm font-semibold uppercase tracking-[0.18em]">{title}</h2>
           {subtitle ? <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p> : null}
         </div>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
