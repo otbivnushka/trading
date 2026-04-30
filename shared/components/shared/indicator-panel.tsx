@@ -8,25 +8,19 @@ import { useMarketDataStore } from '@/shared/store/market-data';
 
 type IndicatorPanelProps = {
   definition: IndicatorDefinition;
-  candles?: Parameters<IndicatorDefinition["buildSeries"]>[0];
+  candles?: Parameters<IndicatorDefinition['buildSeries']>[0];
 };
 
-export function IndicatorPanel({
-  definition,
-  candles: candlesProp,
-}: IndicatorPanelProps) {
+export function IndicatorPanel({ definition, candles: candlesProp }: IndicatorPanelProps) {
   const candlesFromStore = useMarketDataStore((state) => state.candles);
   const candles = candlesProp ?? candlesFromStore;
-  const series = useMemo(
-    () => definition.buildSeries(candles),
-    [candles, definition],
-  );
+  const series = useMemo(() => definition.buildSeries(candles), [candles, definition]);
 
   return (
     <ChartShell
       title={definition.name}
-      subtitle={definition.description}
-      height={definition.height}
+      description={definition.description}
+      height={String(definition.height) + 'px'}
     >
       <IndicatorChart id={`indicator-${definition.id}`} series={series} />
     </ChartShell>

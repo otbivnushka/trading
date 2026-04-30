@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/shared/lib/utils';
 import { Input } from './input';
 import Image from 'next/image';
+import { useMarketDataStore } from '@/shared/store/market-data';
 
 const instruments = [
   {
@@ -21,12 +22,12 @@ const instruments = [
     label: 'ETHUSD',
     icon: 'https://s3-symbol-logo.tradingview.com/crypto/XTVCETH.svg',
   },
-] as const;
+];
 
 export function InstrumentMenu() {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [inputValue, setInputValue] = useState('');
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -53,6 +54,13 @@ export function InstrumentMenu() {
     };
   }, [isOpen]);
 
+  const instrument = useMarketDataStore((state) => state.instrument);
+  const setInstrument = useMarketDataStore((state) => state.setInstrument);
+
+  const filteredInstruments = instruments.filter((instrument) =>
+    instrument.label.toLowerCase().includes(inputValue.toLowerCase())
+  );
+
   return (
     <div ref={menuRef} className="relative">
       <button
@@ -62,40 +70,54 @@ export function InstrumentMenu() {
         onClick={() => setIsOpen((current) => !current)}
         className="inline-flex h-8 w-30 items-center justify-left rounded-2xl border border-input bg-background px-3 text-foreground transition hover:border-ring hover:text-foreground"
       >
-        <div>BTCUSD</div>
+        <div>{instrument}</div>
       </button>
 
       {isOpen ? (
         <div
           role="menu"
           aria-label="Theme settings"
-          className="absolute left-0 z-50 mt-3 w-124 overflow-hidden rounded-2xl border border-border bg-popover p-1.5 text-sm text-popover-foreground"
+          className="absolute left-0 z-50 mt-3 w-124 overflow-hidden rounded-2xl border border-border bg-popover p-4 text-sm text-popover-foreground"
         >
-          <p className="px-3 py-3 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             Search instruments
           </p>
-          <Input placeholder="Search" className="rounded-3xl outline-0" />
-          {instruments.map((instrument) => {
+          <div className="mb-3 text-xs">
+            <Input
+              placeholder="Search"
+              className="outline-0"
+              value={inputValue}
+              onChange={(e) => {
+                setInputValue(e.target.value);
+              }}
+            />
+          </div>
+          {filteredInstruments.map((instrumentItem) => {
             return (
               <button
-                key={instrument.value}
+                key={instrumentItem.value}
                 type="button"
                 role="menuitemradio"
                 aria-checked={false}
-                onClick={() => {}}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setInstrument(instrumentItem.value);
+                  setIsOpen(false);
+                }}
                 className={cn(
-                  "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left transition",
-                  "hover:bg-accent hover:text-accent-foreground",
+                  'flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left transition',
+                  'hover:bg-accent hover:text-accent-foreground',
+                  instrumentItem.value === instrument && 'bg-accent text-accent-foreground'
                 )}
               >
                 <Image
                   width={16}
                   height={16}
-                  src={instrument.icon}
+                  src={instrumentItem.icon}
                   alt=""
                   className="rounded-2xl"
                 />
-                <span className="flex-1">{instrument.label}</span>
+                <span className="flex-1">{instrumentItem.label}</span>
               </button>
             );
           })}

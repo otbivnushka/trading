@@ -23,7 +23,7 @@ export type IndicatorSeries = {
   data: IndicatorPoint[];
 };
 
-export type IndicatorId = 'macd' | 'rsi' | 'mfi';
+export type IndicatorId = 'macd' | 'rsi' | 'mfi' | null;
 
 export type IndicatorDefinition = {
   id: IndicatorId;
@@ -41,3 +41,6 @@ export type ChartHandle = {
   primarySeries: ISeriesApi<SeriesType, Time>;
   priceByTime: Map<Time, number>;
 };
+
+export const TIMEFRAMES = ['1m', '5m', '15m', '1h', '4h', '1d'] as const;
+export type Timeframe = (typeof TIMEFRAMES)[number];

@@ -11,13 +11,10 @@ export function ChartStack() {
   return (
     <div className="space-y-4 h-full">
       <ChartShell
-        title="BTCUSD Candles"
-        subtitle={
-          lastCandle
-            ? `Mock OHLC feed • Last close ${lastCandle.close.toFixed(2)}`
-            : 'Mock OHLC feed'
-        }
-        height={'calc(100vh - 64px - 65px - 8px)'}
+        title="BTCUSD"
+        description="Mock OHLC feed"
+        subtitle={lastCandle ? `Last close ${lastCandle.close.toFixed(2)}` : ''}
+        height={'calc(100vh - 64px - 65px - 10px)'}
       >
         <CandlestickChart id="main-price-chart" />
       </ChartShell>
