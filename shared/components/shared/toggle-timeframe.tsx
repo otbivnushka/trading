@@ -14,12 +14,12 @@ const ToggleTimeframe: React.FC<ToggleTimeframeProps> = ({ className }) => {
   return (
     <div className={className}>
       <ToggleGroup
-        className="rounded-2xl"
+        className="rounded-2xl "
         value={[timeframe]}
         onValueChange={(value) => value.length > 0 && setTimeframe(value[0] as Timeframe)}
       >
         {TIMEFRAMES.map((timeframe) => (
-          <ToggleGroupItem key={timeframe} value={timeframe}>
+          <ToggleGroupItem key={timeframe} value={timeframe} className={'text-sm font-medium'}>
             {timeframe.toUpperCase()}
           </ToggleGroupItem>
         ))}

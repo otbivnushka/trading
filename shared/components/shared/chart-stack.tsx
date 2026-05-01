@@ -11,7 +11,7 @@ export function ChartStack() {
   return (
     <div className="space-y-4 h-full">
       <ChartShell
-        title="OHLC chart"
+        title="OHLC"
         description="Mock OHLC feed"
         subtitle={lastCandle ? `Last close ${lastCandle.close.toFixed(2)}` : ''}
         height={'calc(100vh - 64px - 54px)'}

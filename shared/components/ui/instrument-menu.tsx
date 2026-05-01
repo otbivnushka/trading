@@ -68,7 +68,7 @@ export function InstrumentMenu() {
         aria-haspopup="menu"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((current) => !current)}
-        className="inline-flex h-8 w-30 items-center justify-left rounded-2xl bg-background px-3 text-foreground transition hover:text-foreground"
+        className="inline-flex h-8 md:w-30 items-center justify-left rounded-2xl bg-background px-3 text-foreground transition hover:text-foreground"
       >
         <div>{instrument}</div>
       </button>

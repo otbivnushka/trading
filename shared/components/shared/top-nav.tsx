@@ -12,8 +12,8 @@ export function TopNav() {
 
   return (
     <header className="flex h-16 items-center justify-between  bg-card px-5 text-card-foreground">
-      <div className="flex items-center gap-4">
-        <UserButton />
+      <div className="flex items-center gap-1 md:gap-4">
+        <UserButton className="hidden lg:visible" />
         <InstrumentMenu />
         <div className="hidden items-center gap-4 text-sm text-muted-foreground md:flex">
           <span>{instrument}</span>
