@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
-import { Button } from '@base-ui/react';
 import { Info } from 'lucide-react';
 
 type ChartShellProps = {

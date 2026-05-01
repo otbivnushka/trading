@@ -11,6 +11,7 @@ import {
   type Time,
   type UTCTimestamp,
   type IChartApi,
+  HistogramSeries,
 } from 'lightweight-charts';
 
 import { getChartTheme } from '@/shared/lib/chart-options';
@@ -28,6 +29,8 @@ export function CandlestickChart({ id }: CandlestickChartProps) {
 
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
+  const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
+
   const data = useMarketDataStore((state) => state.candles);
   const registerChart = useChartSyncStore((state) => state.registerChart);
 
@@ -57,8 +60,24 @@ export function CandlestickChart({ id }: CandlestickChartProps) {
       wickDownColor: '#fca5a5',
     });
 
+    const volumeSeries = chart.addSeries(HistogramSeries, {
+      priceFormat: {
+        type: 'volume',
+      },
+      priceScaleId: 'volume',
+      base: 0,
+    });
+
+    chart.priceScale('volume').applyOptions({
+      scaleMargins: {
+        top: 0.9,
+        bottom: 0,
+      },
+    });
+
     chartRef.current = chart;
     seriesRef.current = series;
+    volumeSeriesRef.current = volumeSeries;
 
     new RectangleDrawingTool(
       chartRef.current,
@@ -106,13 +125,23 @@ export function CandlestickChart({ id }: CandlestickChartProps) {
       resizeObserver.disconnect();
       chart.remove();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (!seriesRef.current || data.length === 0 || !chartRef.current) return;
+    if (!seriesRef.current || data.length === 0 || !chartRef.current || !volumeSeriesRef.current)
+      return;
 
     seriesRef.current.setData(data as CandlestickData<UTCTimestamp>[]);
-
+    const volumeData = data.map((candle) => ({
+      time: candle.time,
+      value: candle.open - candle.close,
+      color:
+        candle.close > candle.open
+          ? 'rgba(34,197,94,0.5)' // green
+          : 'rgba(239,68,68,0.5)', // red
+    }));
+    volumeSeriesRef.current.setData(volumeData);
     chartRef.current?.timeScale().scrollToRealTime();
 
     // line series
