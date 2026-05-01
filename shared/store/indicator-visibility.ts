@@ -5,16 +5,16 @@ import { indicatorDefinitions } from "@/shared/lib/indicator-definitions";
 import type { IndicatorId } from "@/@types/types";
 
 type IndicatorVisibilityState = {
-  enabledIndicators: Record<IndicatorId, boolean>;
-  toggleIndicator: (id: IndicatorId, enabled: boolean) => void;
+  enabledIndicators: Record<NonNullable<IndicatorId>, boolean>;
+  toggleIndicator: (id: NonNullable<IndicatorId>, enabled: boolean) => void;
 };
 
 const initialIndicatorState = indicatorDefinitions.reduce(
   (state, indicator) => ({
     ...state,
-    [indicator.id]: indicator.defaultEnabled,
+    [indicator.id as NonNullable<IndicatorId>]: indicator.defaultEnabled,
   }),
-  {} as Record<IndicatorId, boolean>,
+  {} as Record<NonNullable<IndicatorId>, boolean>,
 );
 
 export const useIndicatorVisibilityStore = create<IndicatorVisibilityState>(
