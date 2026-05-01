@@ -11,7 +11,6 @@ import {
   type Time,
   type UTCTimestamp,
   type IChartApi,
-  LineSeries,
 } from 'lightweight-charts';
 
 import { getChartTheme } from '@/shared/lib/chart-options';
@@ -29,7 +28,6 @@ export function CandlestickChart({ id }: CandlestickChartProps) {
 
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
-  const lineSeriesRef = useRef<ISeriesApi<'Line'> | null>(null);
   const data = useMarketDataStore((state) => state.candles);
   const registerChart = useChartSyncStore((state) => state.registerChart);
 
@@ -61,12 +59,6 @@ export function CandlestickChart({ id }: CandlestickChartProps) {
 
     chartRef.current = chart;
     seriesRef.current = series;
-
-    const lineSeries = chart.addSeries(LineSeries, {
-      color: '#f59e0b',
-      lineWidth: 2,
-    });
-    lineSeriesRef.current = lineSeries;
 
     new RectangleDrawingTool(
       chartRef.current,

@@ -16,8 +16,6 @@ import { PluginBase } from './helpers/plugin-base';
 import { ensureDefined } from './helpers/assertions';
 import { positionsLine } from './dimensions/positions';
 
-// ─── Renderer ────────────────────────────────────────────────────────────────
-
 interface ViewPoint {
   x: Coordinate | null;
   y: Coordinate | null;
@@ -76,8 +74,6 @@ class LinePaneRenderer implements IPrimitivePaneRenderer {
   }
 }
 
-// ─── Pane View ────────────────────────────────────────────────────────────────
-
 class LinePaneView implements IPrimitivePaneView {
   _source: Line;
   _p1: ViewPoint = { x: null, y: null };
@@ -115,8 +111,6 @@ class LinePaneView implements IPrimitivePaneView {
     return 'normal';
   }
 }
-
-// ─── Axis Label Views ─────────────────────────────────────────────────────────
 
 abstract class LineAxisView implements ISeriesPrimitiveAxisView {
   _source: Line;
@@ -171,8 +165,6 @@ class LinePriceAxisView extends LineAxisView {
   }
 }
 
-// ─── Options ──────────────────────────────────────────────────────────────────
-
 interface Point {
   time: Time;
   price: number;
@@ -207,8 +199,6 @@ const defaultOptions: LineDrawingToolOptions = {
     return date.toLocaleDateString();
   },
 };
-
-// ─── Line Primitive ───────────────────────────────────────────────────────────
 
 class Line extends PluginBase {
   _options: LineDrawingToolOptions;
@@ -250,8 +240,6 @@ class Line extends PluginBase {
   }
 }
 
-// ─── Preview ──────────────────────────────────────────────────────────────────
-
 class PreviewLine extends Line {
   constructor(p1: Point, p2: Point, options: Partial<LineDrawingToolOptions> = {}) {
     super(p1, p2, options);
@@ -266,8 +254,6 @@ class PreviewLine extends Line {
     this.requestUpdate();
   }
 }
-
-// ─── Drawing Tool ─────────────────────────────────────────────────────────────
 
 export class LineDrawingTool {
   private _chart: IChartApi | undefined;
@@ -291,7 +277,14 @@ export class LineDrawingTool {
     this._series = series;
     this._buttonDraw = buttonDraw;
     this._inputColor = inputColor;
-    this._defaultOptions = { ...defaultOptions, ...options };
+    const hex = inputColor.value.replace('#', '');
+    this._defaultOptions = {
+      ...defaultOptions,
+      ...options,
+      color: `#${hex}E5`,
+      previewColor: `#${hex}66`,
+      labelColor: `#${hex}`,
+    };
     this._chart.subscribeClick(this._clickHandler);
     this._chart.subscribeCrosshairMove(this._moveHandler);
     this._addClickControls();
@@ -327,8 +320,6 @@ export class LineDrawingTool {
     return this._drawing;
   }
 
-  // ── Event handlers ──
-
   private _onClick(param: MouseEventParams) {
     if (!this._drawing || !param.point || !param.time || !this._series) return;
     const price = this._series.coordinateToPrice(param.point.y);
@@ -345,8 +336,6 @@ export class LineDrawingTool {
     }
   }
 
-  // ── Point logic ──
-
   private _addPoint(p: Point) {
     this._points.push(p);
     if (this._points.length >= 2) {
@@ -355,7 +344,6 @@ export class LineDrawingTool {
       this._removePreviewLine();
       return;
     }
-    // First click — spawn preview anchored at p1
     this._addPreviewLine(p);
   }
 
@@ -381,8 +369,6 @@ export class LineDrawingTool {
     }
   }
 
-  // ── Controls ──
-
   private _addClickControls() {
     const input = this._inputColor;
     if (!this._buttonDraw || !input) return;
@@ -395,11 +381,10 @@ export class LineDrawingTool {
       }
     });
 
-    input.value = '#2962FF';
     input.addEventListener('change', () => {
       const hex = input.value;
-      this._defaultOptions.color = hex + 'E5'; // ~90% opacity
-      this._defaultOptions.previewColor = hex + '66'; // ~40% opacity
+      this._defaultOptions.color = hex + 'E5';
+      this._defaultOptions.previewColor = hex + '66';
       this._defaultOptions.labelColor = hex;
     });
   }
