@@ -3,8 +3,8 @@ import { ThemeProvider } from '@/shared/components/shared/theme-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Трейдинговая панель',
-  description: 'Тестовое задание',
+  title: 'Trading panel',
+  description: 'Trading panel',
 };
 
 export default function RootLayout({
