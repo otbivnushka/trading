@@ -5,10 +5,11 @@ import { cn } from '@/shared/lib/utils';
 
 type AppFrameProps = {
   charts: ReactNode;
-  sidebar: ReactNode;
+  sidebarLeft: ReactNode;
+  sidebarRight: ReactNode;
 };
 
-export function AppFrame({ charts, sidebar }: AppFrameProps) {
+export function AppFrame({ charts, sidebarLeft, sidebarRight }: AppFrameProps) {
   const activeIndicatorId = useActiveIndicatorStore((state) => state.activeIndicatorId);
 
   return (
@@ -16,12 +17,13 @@ export function AppFrame({ charts, sidebar }: AppFrameProps) {
       <TopNav />
       <div
         className={cn(
-          'grid min-h-0 flex-1 gap-1 p-1 grid-cols-[minmax(0,1fr)_16rem]',
-          !activeIndicatorId && 'grid-cols-[minmax(0,1fr)_4rem]'
+          'grid min-h-0 flex-1 gap-1 p-1 grid-cols-[3rem_minmax(0,1fr)_16rem]',
+          !activeIndicatorId && 'grid-cols-[3rem_minmax(0,1fr)_4rem]'
         )}
       >
+        {sidebarLeft}
         <div className="min-w-0 overflow-y-auto pr-0 lg:pr-1">{charts}</div>
-        {sidebar}
+        {sidebarRight}
       </div>
     </main>
   );

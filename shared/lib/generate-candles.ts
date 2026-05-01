@@ -35,12 +35,15 @@ export function generateMockCandles(
     const impulse = ((index * 17) % 11) / 10 - 0.5;
 
     const open = price;
-    const close = Math.max(price - 0.5, open + wave * 0.15 + impulse + drift / count);
+    const close = Math.max(
+      price - scale * Math.random(),
+      open + wave * 0.15 + impulse + drift / count
+    );
 
     const spread = 1.2 * scale + Math.abs(Math.sin(index / 5)) * 1.5 * scale;
 
     const high = Math.max(open, close) + spread * Math.random();
-    const low = Math.min(open, close) - spread * 0.8;
+    const low = Math.min(open, close) - spread * 0.4 * Math.random();
 
     price = close;
 

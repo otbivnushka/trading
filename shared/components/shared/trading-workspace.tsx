@@ -6,6 +6,7 @@ import { ChartStack } from '@/shared/components/shared/chart-stack';
 import { IndicatorSidebar } from '@/shared/components/shared/indicator-sidebar';
 import type { Candle } from '@/@types/types';
 import { useMarketDataStore } from '@/shared/store/market-data';
+import { DrawingSidebar } from './drawing-sidebar';
 
 type TradingWorkspaceProps = {
   candles: Candle[];
@@ -18,5 +19,11 @@ export function TradingWorkspace({ candles }: TradingWorkspaceProps) {
     setCandles(candles);
   }, [candles, setCandles]);
 
-  return <AppFrame charts={<ChartStack />} sidebar={<IndicatorSidebar />} />;
+  return (
+    <AppFrame
+      charts={<ChartStack />}
+      sidebarRight={<IndicatorSidebar />}
+      sidebarLeft={<DrawingSidebar />}
+    />
+  );
 }
