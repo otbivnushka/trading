@@ -14,7 +14,7 @@ export function ChartStack() {
         title="BTCUSD"
         description="Mock OHLC feed"
         subtitle={lastCandle ? `Last close ${lastCandle.close.toFixed(2)}` : ''}
-        height={'calc(100vh - 64px - 65px - 10px)'}
+        height={'calc(100vh - 64px - 54px)'}
       >
         <CandlestickChart id="main-price-chart" />
       </ChartShell>

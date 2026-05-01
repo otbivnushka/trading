@@ -14,6 +14,7 @@ import {
 } from 'lightweight-charts';
 import { PluginBase } from './helpers/plugin-base';
 import { ensureDefined } from './helpers/assertions';
+import { positionsLine } from './dimensions/positions';
 
 // ─── Renderer ────────────────────────────────────────────────────────────────
 
@@ -49,6 +50,12 @@ class LinePaneRenderer implements IPrimitivePaneRenderer {
         return;
 
       const ctx = scope.context;
+
+      const x1 = positionsLine(this._p1.x, scope.horizontalPixelRatio, this._lineWidth);
+      const y1 = positionsLine(this._p1.y, scope.verticalPixelRatio, this._lineWidth);
+      const x2 = positionsLine(this._p2.x, scope.horizontalPixelRatio, this._lineWidth);
+      const y2 = positionsLine(this._p2.y, scope.verticalPixelRatio, this._lineWidth);
+
       ctx.strokeStyle = this._color;
       ctx.lineWidth = this._lineWidth * scope.horizontalPixelRatio;
 
@@ -61,8 +68,8 @@ class LinePaneRenderer implements IPrimitivePaneRenderer {
       }
 
       ctx.beginPath();
-      ctx.moveTo(this._p1.x * scope.horizontalPixelRatio, this._p1.y * scope.verticalPixelRatio);
-      ctx.lineTo(this._p2.x * scope.horizontalPixelRatio, this._p2.y * scope.verticalPixelRatio);
+      ctx.moveTo(x1.position, y1.position);
+      ctx.lineTo(x2.position, y2.position);
       ctx.stroke();
       ctx.setLineDash([]);
     });
@@ -388,10 +395,11 @@ export class LineDrawingTool {
       }
     });
 
+    input.value = '#2962FF';
     input.addEventListener('change', () => {
       const hex = input.value;
-      this._defaultOptions.color = hex + 'E5';
-      this._defaultOptions.previewColor = hex + '66';
+      this._defaultOptions.color = hex + 'E5'; // ~90% opacity
+      this._defaultOptions.previewColor = hex + '66'; // ~40% opacity
       this._defaultOptions.labelColor = hex;
     });
   }

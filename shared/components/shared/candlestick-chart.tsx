@@ -80,7 +80,7 @@ export function CandlestickChart({ id }: CandlestickChartProps) {
 
     new LineDrawingTool(
       chartRef.current,
-      lineSeriesRef.current,
+      seriesRef.current,
       document.querySelector<HTMLButtonElement>('#draw-line')!,
       document.querySelector<HTMLInputElement>('#color')!,
       {
