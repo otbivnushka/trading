@@ -42,9 +42,6 @@ export abstract class PluginBase implements ISeriesPrimitive<Time> {
     return ensureDefined(this._series);
   }
 
-  // This method is a class property to maintain the
-  // lexical 'this' scope (due to the use of the arrow function)
-  // and to ensure its reference stays the same, so we can unsubscribe later.
   private _fireDataUpdated = (scope: DataChangedScope) => {
     if (this.dataUpdated) {
       this.dataUpdated(scope);

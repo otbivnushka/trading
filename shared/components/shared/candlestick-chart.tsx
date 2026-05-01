@@ -136,15 +136,10 @@ export function CandlestickChart({ id }: CandlestickChartProps) {
     const volumeData = data.map((candle) => ({
       time: candle.time,
       value: candle.open - candle.close,
-      color:
-        candle.close > candle.open
-          ? 'rgba(34,197,94,0.5)' // green
-          : 'rgba(239,68,68,0.5)', // red
+      color: candle.close > candle.open ? 'rgba(34,197,94,0.5)' : 'rgba(239,68,68,0.5)',
     }));
     volumeSeriesRef.current.setData(volumeData);
     chartRef.current?.timeScale().scrollToRealTime();
-
-    // line series
   }, [data]);
 
   useEffect(() => {
