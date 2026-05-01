@@ -26,13 +26,14 @@ export function ChartShell({ title, subtitle, description, height, children }: C
                 <p>{description}</p>
               </TooltipContent>
             </Tooltip>
-            {subtitle ? <h5 className="text-xs text-muted-foreground">{subtitle}</h5> : null}
           </div>
         </div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span className="h-2 w-2 rounded-full bg-emerald-400" />
-          Live
-        </div>
+        {subtitle ? (
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+            <span>{subtitle}</span>
+          </div>
+        ) : null}
       </div>
       <div style={{ height }} className="relative">
         {children}

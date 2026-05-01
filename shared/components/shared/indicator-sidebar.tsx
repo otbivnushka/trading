@@ -4,7 +4,7 @@ import { IndicatorButton } from '@/shared/components/shared/indicator-button';
 import { IndicatorDisplay } from '@/shared/components/shared/indicator-display';
 import { indicatorDefinitions } from '@/shared/lib/indicator-definitions';
 import { useActiveIndicatorStore } from '@/shared/store/active-indicator';
-import { PanelRightClose } from 'lucide-react';
+import { PanelRightClose, PanelRightOpen } from 'lucide-react';
 
 export function IndicatorSidebar() {
   const activeIndicatorId = useActiveIndicatorStore((state) => state.activeIndicatorId);
@@ -17,7 +17,7 @@ export function IndicatorSidebar() {
             className="flex w-full items-center justify-between rounded-xl p-3 text-left transition bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground"
             onClick={() => setActiveIndicatorId('macd')}
           >
-            <PanelRightClose />
+            <PanelRightOpen />
           </button>
         </div>
       </aside>

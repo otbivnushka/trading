@@ -61,7 +61,7 @@ export function SettingsMenu() {
         aria-haspopup="menu"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((current) => !current)}
-        className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-input bg-background text-foreground transition hover:border-ring hover:text-foreground"
+        className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-background text-foreground transition hover:text-foreground"
       >
         <Settings className="h-5 w-5" />
         <span className="sr-only">Open settings</span>
@@ -71,7 +71,7 @@ export function SettingsMenu() {
         <div
           role="menu"
           aria-label="Theme settings"
-          className="absolute right-0 z-50 mt-3 w-44 overflow-hidden rounded-2xl border border-border bg-popover p-1.5 text-sm text-popover-foreground"
+          className="absolute right-0 z-50 mt-3 w-44 overflow-hidden rounded-2xl bg-popover p-1.5 text-sm text-popover-foreground"
         >
           <p className="px-3 py-2 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             Theme

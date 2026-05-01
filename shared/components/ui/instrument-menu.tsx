@@ -68,7 +68,7 @@ export function InstrumentMenu() {
         aria-haspopup="menu"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((current) => !current)}
-        className="inline-flex h-8 w-30 items-center justify-left rounded-2xl border border-input bg-background px-3 text-foreground transition hover:border-ring hover:text-foreground"
+        className="inline-flex h-8 w-30 items-center justify-left rounded-2xl bg-background px-3 text-foreground transition hover:text-foreground"
       >
         <div>{instrument}</div>
       </button>
@@ -77,7 +77,7 @@ export function InstrumentMenu() {
         <div
           role="menu"
           aria-label="Theme settings"
-          className="absolute left-0 z-50 mt-3 w-124 overflow-hidden rounded-2xl border border-border bg-popover p-4 text-sm text-popover-foreground"
+          className="absolute left-0 z-50 mt-3 w-124 overflow-hidden rounded-2xl bg-popover p-4 text-sm text-popover-foreground"
         >
           <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             Search instruments

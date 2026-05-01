@@ -1,6 +1,6 @@
-import { cn } from "@/shared/lib/utils";
-import { User } from "lucide-react";
-import React from "react";
+import { cn } from '@/shared/lib/utils';
+import { User } from 'lucide-react';
+import React from 'react';
 
 interface UserButtonProps {
   className?: string;
@@ -8,12 +8,7 @@ interface UserButtonProps {
 
 const UserButton: React.FC<UserButtonProps> = ({ className }) => {
   return (
-    <div
-      className={cn(
-        className,
-        "rounded-xl border border-input bg-background p-1 text-foreground",
-      )}
-    >
+    <div className={cn(className, 'rounded-xl bg-background p-1 text-foreground')}>
       <User />
     </div>
   );
